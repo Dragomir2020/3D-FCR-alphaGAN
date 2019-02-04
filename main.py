@@ -16,6 +16,11 @@ flags.DEFINE_integer("ini_epoch", 0, "The number of initial epoch --if middle_st
 flags.DEFINE_string("mode", 'train', "Execute mode: train/evaluate_recons/evaluate_interpolate/evaluate_noise")
 flags.DEFINE_integer("conf_epoch", 10000, "The number of confirmation epoch to evaluate interpolate, reconstruction etc [100]")
 
+# TPU Related flags
+flags.DEFINE_integer("use_tpu", False, "Set to true when running code on Google cloud tpu")
+flags.DEFINE_integer("tpu_name", "none", "run \"ctpu print-config \" to get TPU name and set tpu_name")
+flags.DEFINE_integer("model_dir", "none", "Set the google cloud bucket where models will be saved to and loaded from. gs://bucket-name")
+
 FLAGS = flags.FLAGS
 
 def main():
