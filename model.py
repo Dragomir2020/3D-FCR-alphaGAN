@@ -279,18 +279,24 @@ class FCR_aGAN():
         cost_code = code_discrim_loss
         cost_gen_ref = self.lamda_recons*recons_loss_refine + gen_loss_refine
         cost_discrim_ref = discrim_loss_refine
+        
+        # Only return summary if tpu is not in use
+        if not cfg.USE_TPU:
+            tf.summary.scalar("recons_loss", tf.reduce_mean(recons_loss))
+            tf.summary.scalar("gen_loss", tf.reduce_mean(gen_loss))
+            tf.summary.scalar("discrim_loss", tf.reduce_mean(discrim_loss))
+            tf.summary.scalar("code_encode_loss", tf.reduce_mean(code_encode_loss))
+            tf.summary.scalar("code_discrim_loss", tf.reduce_mean(code_discrim_loss))
 
-        tf.summary.scalar("recons_loss", tf.reduce_mean(recons_loss))
-        tf.summary.scalar("gen_loss", tf.reduce_mean(gen_loss))
-        tf.summary.scalar("discrim_loss", tf.reduce_mean(discrim_loss))
-        tf.summary.scalar("code_encode_loss", tf.reduce_mean(code_encode_loss))
-        tf.summary.scalar("code_discrim_loss", tf.reduce_mean(code_discrim_loss))
-
-        summary_op = tf.summary.merge_all()
-
-        return Z, Z_encode, vox_real_, vox_gen, vox_gen_decode, vox_after_refine_dec, vox_after_refine_gen,\
-         recons_loss, code_encode_loss, gen_loss, discrim_loss, recons_loss_refine, gen_loss_refine, discrim_loss_refine,\
-          cost_enc, cost_code, cost_gen, cost_discrim, cost_gen_ref, cost_discrim_ref, summary_op
+            summary_op = tf.summary.merge_all()
+            
+            return Z, Z_encode, vox_real_, vox_gen, vox_gen_decode, vox_after_refine_dec, vox_after_refine_gen,\
+                 recons_loss, code_encode_loss, gen_loss, discrim_loss, recons_loss_refine, gen_loss_refine, discrim_loss_refine,\
+                  cost_enc, cost_code, cost_gen, cost_discrim, cost_gen_ref, cost_discrim_ref, summary_op
+        else:
+                return Z, Z_encode, vox_real_, vox_gen, vox_gen_decode, vox_after_refine_dec, vox_after_refine_gen,\
+                 recons_loss, code_encode_loss, gen_loss, discrim_loss, recons_loss_refine, gen_loss_refine, discrim_loss_refine,\
+                  cost_enc, cost_code, cost_gen, cost_discrim, cost_gen_ref, cost_discrim_ref
 
     def encoder(self, vox):
 
