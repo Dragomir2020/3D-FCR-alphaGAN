@@ -57,6 +57,12 @@ __C.LAMDA_RECONS = 1
 __C.LAMDA_GAMMA = 0.97
 
 
+# TPU Config
+__C.USE_TPU = False
+__C.TPU_NAME = "dillon.dragomir" # Change this to the actual name
+__C.MODEL_DIR = "gs://tpu-data-0109" # Change to your bucket name
+
+
 def cfg_from_file(filename):
     """Load a config file and merge it into the default options."""
     import yaml
