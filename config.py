@@ -17,6 +17,7 @@ __C.RECORD_VOX_NUM = 10
 __C.SWITCHING_ITE = 75001
 
 # Network
+# For TPU Tensor Shapes must be static
 __C.NET = edict()
 __C.NET.DIM_Z = 16 
 __C.NET.DIM = [512,256,128,64,12] 
