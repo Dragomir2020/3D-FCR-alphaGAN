@@ -17,9 +17,9 @@ flags.DEFINE_string("mode", 'train', "Execute mode: train/evaluate_recons/evalua
 flags.DEFINE_integer("conf_epoch", 10000, "The number of confirmation epoch to evaluate interpolate, reconstruction etc [100]")
 
 # TPU Related flags
-flags.DEFINE_boolean("use_tpu", False, "Set to true when running code on Google cloud tpu")
-flags.DEFINE_string("tpu_name", "none", "run \"ctpu print-config \" to get TPU name and set tpu_name")
-flags.DEFINE_string("model_dir", "none", "Set the google cloud bucket where models will be saved to and loaded from. gs://bucket-name")
+flags.DEFINE_boolean("use_tpu", cfg.USE_TPU, "Set to true when running code on Google cloud tpu")
+flags.DEFINE_string("tpu_name", cfg.TPU_NAME, "run \"ctpu print-config \" to get TPU name and set tpu_name")
+flags.DEFINE_string("model_dir", cfg.MODEL_DIR, "Set the google cloud bucket where models will be saved to and loaded from. gs://bucket-name")
 
 FLAGS = flags.FLAGS
 
