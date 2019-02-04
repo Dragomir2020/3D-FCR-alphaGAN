@@ -70,7 +70,11 @@ def train(n_epochs, learning_rate_G, learning_rate_D, batch_size, mid_flag, chec
 
     Z_tf_sample, vox_tf_sample = fcr_agan_model.samples_generator(visual_size=batch_size)
     sample_vox_tf, sample_refine_vox_tf = fcr_agan_model.refine_generator(visual_size=batch_size)
-    writer=tf.summary.FileWriter(cfg.DIR.LOG_PATH, sess.graph)
+    
+    # Only supported for non-tpu training
+    if not cfg.USE_TPU:
+        writer=tf.summary.FileWriter(cfg.DIR.LOG_PATH, sess.graph)
+    
     tf.global_variables_initializer().run()
 
     if mid_flag:
@@ -175,9 +179,9 @@ def train(n_epochs, learning_rate_G, learning_rate_D, batch_size, mid_flag, chec
                     np.save(cfg.DIR.TRAIN_OBJ_PATH + '/' + str(ite/freq) + '_refine.npy', record_vox)
                     save_path=saver.save(sess, cfg.DIR.CHECK_PT_PATH + str(ite/freq), global_step=global_step)
 
-
-            
-            writer.add_summary(summary, global_step=ite)
+            # Output summary if local training
+            if not cfg.USE_TPU:
+                writer.add_summary(summary, global_step=ite)
 
 
 
